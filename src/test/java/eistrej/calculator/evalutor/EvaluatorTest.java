@@ -32,4 +32,12 @@ public class EvaluatorTest {
         assertEquals(896, evaluator.evaluate("896\t"));
         assertEquals(896, evaluator.evaluate("896\t \t"));
     }
+
+    @Test
+    public void additionOfTwoNumbersShouldBeEvaluatedCorrectly() {
+        Evaluator evaluator = new Evaluator();
+        assertEquals(4, evaluator.evaluate("2+2"));
+        assertEquals(34, evaluator.evaluate("6+28"));
+        assertEquals(2019, evaluator.evaluate("1983+36"));
+    }
 }
