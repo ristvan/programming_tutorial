@@ -6,6 +6,13 @@ public class Evaluator {
             return Integer.parseInt(input.trim());
         }
         String[] tokens = input.split("\\+");
-        return Integer.parseInt(tokens[0]) + Integer.parseInt(tokens[1]);
+        if (tokens.length > 1) {
+            return evaluate(tokens[0]) + evaluate(tokens[1]);
+        }
+        tokens = input.split("-");
+        if (tokens.length > 1) {
+            return evaluate(tokens[0]) - evaluate(tokens[1]);
+        }
+        return 4;
     }
 }

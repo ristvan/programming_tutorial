@@ -39,5 +39,16 @@ public class EvaluatorTest {
         assertEquals(4, evaluator.evaluate("2+2"));
         assertEquals(34, evaluator.evaluate("6+28"));
         assertEquals(2019, evaluator.evaluate("1983+36"));
+        assertEquals(2019, evaluator.evaluate("1983\t+ 36"));
+        assertEquals(2019, evaluator.evaluate("1983 + 36"));
+    }
+
+    @Test
+    public void subtractionOfTwoNumbersShouldBeEvaluatedCorrectly() {
+        Evaluator evaluator = new Evaluator();
+        assertEquals(4, evaluator.evaluate("6-2"));
+        assertEquals(28, evaluator.evaluate("34-6"));
+        assertEquals(1945, evaluator.evaluate("2019-74"));
+        assertEquals(9900, evaluator.evaluate("9999\t - 99"));
     }
 }
