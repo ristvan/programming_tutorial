@@ -6,15 +6,21 @@ import java.util.Map;
 import java.util.function.IntBinaryOperator;
 
 public class Evaluator {
-    public int evaluate(String input) {
-        if (input.matches("\\s*\\d+\\s*")) {
-            return Integer.parseInt(input.trim());
-        }
-        Map<String, IntBinaryOperator> operations = new LinkedHashMap<>();
+
+    private Map<String, IntBinaryOperator> operations;
+
+    public Evaluator() {
+        operations = new LinkedHashMap<>();
         operations.put("\\+", (left, right) -> left + right);
         operations.put("-", (left, right) -> left - right);
         operations.put("\\*", (left, right) -> left * right);
         operations.put("/", (left, right) -> left / right);
+    }
+
+    public int evaluate(String input) {
+        if (input.matches("\\s*\\d+\\s*")) {
+            return Integer.parseInt(input.trim());
+        }
         String[] tokens = null;
         IntBinaryOperator operator = null;
         for (String regularExpression : operations.keySet()) {

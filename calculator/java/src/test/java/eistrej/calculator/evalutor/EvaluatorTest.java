@@ -79,4 +79,13 @@ public class EvaluatorTest {
         assertEquals(15, evaluator.evaluate("1+2+3 + 4\t+\t5" ));
         assertEquals(21, evaluator.evaluate("1+2+3 + 4\t+\t5 +\t6\t"));
     }
+
+    @Test
+    public void subtractionOfMoreThen2NumbersShouldBeEvaluatedCorrectly() {
+        Evaluator evaluator = new Evaluator();
+        assertEquals(6, evaluator.evaluate("12-2-4"));
+        assertEquals(10, evaluator.evaluate("122-22-90"));
+        assertEquals(15, evaluator.evaluate("1024 - 512-256\t-128\t-\t-64-32-17" ));
+        assertEquals(1800, evaluator.evaluate("\t10000\t-\t8196 -\t4\t"));
+    }
 }
