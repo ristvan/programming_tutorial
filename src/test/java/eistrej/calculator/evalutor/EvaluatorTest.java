@@ -51,4 +51,13 @@ public class EvaluatorTest {
         assertEquals(1945, evaluator.evaluate("2019-74"));
         assertEquals(9900, evaluator.evaluate("9999\t - 99"));
     }
+
+    @Test
+    public void multiplicationOfTwoNumbersShouldBeEvaluatedCorrectly() {
+        Evaluator evaluator = new Evaluator();
+        assertEquals(4, evaluator.evaluate("2*2"));
+        assertEquals(4096, evaluator.evaluate("512*8"));
+        assertEquals(42, evaluator.evaluate("6 * 7"));
+        assertEquals(64, evaluator.evaluate("8\t * \t8\t"));
+    }
 }

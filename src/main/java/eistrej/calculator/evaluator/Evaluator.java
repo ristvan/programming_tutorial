@@ -14,16 +14,20 @@ public class Evaluator {
         Map<String, IntBinaryOperator> operations = new LinkedHashMap<>();
         operations.put("\\+", (left, right) -> left + right);
         operations.put("-", (left, right) -> left - right);
+        operations.put("\\*", (left, right) -> left * right);
         String[] tokens = null;
         IntBinaryOperator operator = null;
         Iterator<String>  iterator = operations.keySet().iterator();
         while (iterator.hasNext()) {
-            String regepx = iterator.next();
-            tokens = input.split(regepx);
+            String regularExpression = iterator.next();
+            tokens = input.split(regularExpression);
             if (tokens.length > 1) {
-                operator = operations.get(regepx);
+                operator = operations.get(regularExpression);
                 break;
             }
+        }
+        if (operator == null) {
+            return 0;
         }
 //        String left = String.join("+", Arrays.copyOfRange(tokens, 1, tokens.length));
         return operator.applyAsInt(evaluate(tokens[0]), evaluate(tokens[1]));
