@@ -88,4 +88,13 @@ public class EvaluatorTest {
         assertEquals(15, evaluator.evaluate("1024 - 512-256\t-128\t-\t-64-32-17" ));
         assertEquals(1800, evaluator.evaluate("\t10000\t-\t8196 -\t4\t"));
     }
+
+    @Test
+    public void multiplicationOfMoreThen2NumbersShouldBeEvaluatedCorrectly() {
+        Evaluator evaluator = new Evaluator();
+        assertEquals(6, evaluator.evaluate("1*2*3"));
+        assertEquals(40, evaluator.evaluate("2*4*5"));
+        assertEquals(128, evaluator.evaluate(" 2* 2 * 2\t* 2 *\t2* 2\t*\t2"));
+        assertEquals(500, evaluator.evaluate("\t5 * 2 * 5 * 2* 5"));
+    }
 }
