@@ -27,7 +27,8 @@ public class Evaluator {
         if (operator == null) {
             return 0;
         }
-//        String left = String.join("+", Arrays.copyOfRange(tokens, 1, tokens.length));
-        return operator.applyAsInt(evaluate(tokens[0]), evaluate(tokens[1]));
+        String left = tokens[0];
+        String right = String.join("+", Arrays.copyOfRange(tokens, 1, tokens.length));
+        return operator.applyAsInt(evaluate(left), evaluate(right));
     }
 }

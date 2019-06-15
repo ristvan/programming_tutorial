@@ -70,4 +70,13 @@ public class EvaluatorTest {
         assertEquals(3, evaluator.evaluate(" 7\t/ 2\t"));
         assertEquals(123, evaluator.evaluate("246 / 2"));
     }
+
+    @Test
+    public void additionOfMoreThen2NumbersShouldBeEvaluatedCorrectly() {
+        Evaluator evaluator = new Evaluator();
+        assertEquals(6, evaluator.evaluate("1+2+3"));
+        assertEquals(10, evaluator.evaluate("1+2+3 + 4"));
+        assertEquals(15, evaluator.evaluate("1+2+3 + 4\t+\t5" ));
+        assertEquals(21, evaluator.evaluate("1+2+3 + 4\t+\t5 +\t6\t"));
+    }
 }
