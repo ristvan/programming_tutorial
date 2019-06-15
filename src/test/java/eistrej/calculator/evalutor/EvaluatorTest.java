@@ -60,4 +60,14 @@ public class EvaluatorTest {
         assertEquals(42, evaluator.evaluate("6 * 7"));
         assertEquals(64, evaluator.evaluate("8\t * \t8\t"));
     }
+
+    @Test
+    public void divisionOfTwoNumbersShouldBeEvaluatedCorrectly() {
+        Evaluator evaluator = new Evaluator();
+        assertEquals(2, evaluator.evaluate("4/2"));
+        assertEquals(25, evaluator.evaluate("125/ 5"));
+        assertEquals(100, evaluator.evaluate("10000 /100"));
+        assertEquals(3, evaluator.evaluate(" 7\t/ 2\t"));
+        assertEquals(123, evaluator.evaluate("246 / 2"));
+    }
 }
