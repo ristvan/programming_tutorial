@@ -97,4 +97,14 @@ public class EvaluatorTest {
         assertEquals(128, evaluator.evaluate(" 2* 2 * 2\t* 2 *\t2* 2\t*\t2"));
         assertEquals(500, evaluator.evaluate("\t5 * 2 * 5 * 2* 5"));
     }
+
+    @Test
+    public void divisionOfMoreThen2NumbersShouldBeEvaluatedCorrectly() {
+        Evaluator evaluator = new Evaluator();
+        assertEquals(2, evaluator.evaluate("4/2/1"));
+        assertEquals(5, evaluator.evaluate("125/ 5/5"));
+        assertEquals(33, evaluator.evaluate("10000 /100 / 3"));
+        assertEquals(3, evaluator.evaluate(" 154 / 7 / 3\t/ 2\t"));
+        assertEquals(91, evaluator.evaluate("510510 / 17 / 2 / 5 / 11 / 3"));
+    }
 }
