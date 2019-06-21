@@ -10,16 +10,20 @@ public class Tokenizer implements ITokenizer {
     }
     @Override
     public IToken getNextToken() {
-        if (expression.equals("+")) {
+        if (expression.startsWith("+")) {
             return new IAddition() {
             };
         }
-        if (expression.equals("-")) {
+        if (expression.startsWith("-")) {
             return new IMinus() {
             };
         }
-        if (expression.equals("*")) {
+        if (expression.startsWith("*")) {
             return new IMultiplication() {
+            };
+        }
+        if (expression.startsWith("/")) {
+            return new IDivision() {
             };
         }
 

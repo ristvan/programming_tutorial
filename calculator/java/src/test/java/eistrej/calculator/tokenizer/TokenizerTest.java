@@ -45,6 +45,21 @@ public class TokenizerTest {
         checkTokenIsMultiplication(" \t* \t");
     }
 
+    @Test
+    public void tokenizingDivisionShouldResultMinusToken() {
+        checkTokenIsDivision("/");
+        checkTokenIsDivision(" /");
+        checkTokenIsDivision("/ ");
+        checkTokenIsDivision(" / ");
+        checkTokenIsDivision(" \t/ \t");
+    }
+
+    private void checkTokenIsDivision(String expression) {
+        Tokenizer tokenizer = new Tokenizer(expression);
+        IToken nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IDivision);
+    }
+
     private void checkTokenIsMultiplication(String expression) {
         Tokenizer tokenizer = new Tokenizer(expression);
         IToken nextToken = tokenizer.getNextToken();
