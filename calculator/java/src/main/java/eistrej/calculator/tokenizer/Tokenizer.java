@@ -1,9 +1,6 @@
 package eistrej.calculator.tokenizer;
 
-import eistrej.calculator.tokenizer.tokens.IAddition;
-import eistrej.calculator.tokenizer.tokens.IMinus;
-import eistrej.calculator.tokenizer.tokens.INumber;
-import eistrej.calculator.tokenizer.tokens.IToken;
+import eistrej.calculator.tokenizer.tokens.*;
 
 public class Tokenizer implements ITokenizer {
     private final String expression;
@@ -21,6 +18,11 @@ public class Tokenizer implements ITokenizer {
             return new IMinus() {
             };
         }
+        if (expression.equals("*")) {
+            return new IMultiplication() {
+            };
+        }
+
         return new INumber() {
             @Override
             public int getValue() {

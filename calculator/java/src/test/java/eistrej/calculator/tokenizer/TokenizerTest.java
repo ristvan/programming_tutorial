@@ -3,10 +3,7 @@ package eistrej.calculator.tokenizer;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import eistrej.calculator.tokenizer.tokens.IAddition;
-import eistrej.calculator.tokenizer.tokens.IMinus;
-import eistrej.calculator.tokenizer.tokens.INumber;
-import eistrej.calculator.tokenizer.tokens.IToken;
+import eistrej.calculator.tokenizer.tokens.*;
 import org.junit.Test;
 
 public class TokenizerTest {
@@ -37,6 +34,21 @@ public class TokenizerTest {
         checkTokenIsSubtraction("- ");
         checkTokenIsSubtraction(" - ");
         checkTokenIsSubtraction(" \t- \t");
+    }
+
+    @Test
+    public void tokenizingMultiplicationShouldResultMinusToken() {
+        checkTokenIsMultiplication("*");
+        checkTokenIsMultiplication(" *");
+        checkTokenIsMultiplication("* ");
+        checkTokenIsMultiplication(" * ");
+        checkTokenIsMultiplication(" \t* \t");
+    }
+
+    private void checkTokenIsMultiplication(String expression) {
+        Tokenizer tokenizer = new Tokenizer(expression);
+        IToken nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IMultiplication);
     }
 
     private void checkTokenIsSubtraction(String expression) {
