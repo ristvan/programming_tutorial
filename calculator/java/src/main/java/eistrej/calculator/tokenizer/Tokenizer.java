@@ -28,7 +28,12 @@ public class Tokenizer implements ITokenizer {
             if (tokenCreator.isMatching(expression)) {
                 token = tokenCreator.getToken();
                 int length = tokenCreator.getTokenLength();
-                expression = expression.substring(0, length);
+                if (length < expression.length()) {
+                    expression = expression.substring(length + 1);
+                } else {
+                    expression = "";
+                }
+                break;
             }
         }
         return token;

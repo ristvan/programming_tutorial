@@ -54,6 +54,21 @@ public class TokenizerTest {
         checkTokenIsDivision(" \t/ \t");
     }
 
+    @Test
+    public void tokenizingTwoTokensShouldBeResultedCorrectly() {
+        String expression="28+";
+        Tokenizer tokenizer = new Tokenizer(expression);
+        IToken nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(28, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IAddition);
+
+//        nextToken = tokenizer.getNextToken();
+//        assertEquals(null, nextToken);
+    }
+
     private void checkTokenIsDivision(String expression) {
         Tokenizer tokenizer = new Tokenizer(expression);
         IToken nextToken = tokenizer.getNextToken();
