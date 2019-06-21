@@ -1,112 +1,10 @@
 package eistrej.calculator.tokenizer;
 
 import eistrej.calculator.tokenizer.tokens.*;
+import eistrej.calculator.tokenizer.tokens.generators.*;
 
 import java.util.LinkedList;
 import java.util.List;
-
-interface ITokenCreator {
-    boolean isMatching(String expression);
-    IToken getToken();
-    int getTokenLength();
-}
-
-class NumberTokenCreator implements ITokenCreator {
-    private String expression=null;
-    private int index=0;
-
-    @Override
-    public boolean isMatching(String expression){
-        this.expression=expression;
-        return Character.isDigit(expression.charAt(0));
-    }
-
-    @Override
-    public IToken getToken(){
-        while(index<expression.length()&&Character.isDigit(expression.charAt(index))){
-            index++;
-        }
-        String numberAsString=expression.substring(0,index);
-        return (INumber) () -> Integer.parseInt(numberAsString);
-    }
-
-    @Override
-    public int getTokenLength(){
-        return 1;
-    }
-}
-
-class AdditionTokenGenerator implements ITokenCreator {
-    @Override
-    public boolean isMatching(String expression) {
-        return expression.charAt(0) == '+';
-    }
-
-    @Override
-    public IToken getToken() {
-        return new IAddition() {
-        };
-    }
-
-    @Override
-    public int getTokenLength() {
-        return 1;
-    }
-}
-
-class MinusTokenGenerator implements ITokenCreator {
-    @Override
-    public boolean isMatching(String expression) {
-        return expression.charAt(0) == '-';
-    }
-
-    @Override
-    public IToken getToken() {
-        return new IMinus() {
-        };
-    }
-
-    @Override
-    public int getTokenLength() {
-        return 1;
-    }
-}
-
-class MultiplicationTokenGenerator implements ITokenCreator {
-    @Override
-    public boolean isMatching(String expression) {
-        return expression.charAt(0) == '*';
-    }
-
-    @Override
-    public IToken getToken() {
-        return new IMultiplication() {
-        };
-    }
-
-    @Override
-    public int getTokenLength() {
-        return 1;
-    }
-}
-
-class DivisionTokenGenerator implements ITokenCreator {
-    @Override
-    public boolean isMatching(String expression) {
-        return expression.charAt(0) == '/';
-    }
-
-    @Override
-    public IToken getToken() {
-        return new IDivision() {
-        };
-    }
-
-    @Override
-    public int getTokenLength() {
-        return 1;
-    }
-}
 
 
 public class Tokenizer implements ITokenizer {
@@ -118,7 +16,7 @@ public class Tokenizer implements ITokenizer {
 
     @Override
     public IToken getNextToken() {
-        List<ITokenCreator> tokenCreators = new LinkedList<ITokenCreator>();
+        List<ITokenCreator> tokenCreators = new LinkedList<>();
         tokenCreators.add(new NumberTokenCreator());
         tokenCreators.add(new AdditionTokenGenerator());
         tokenCreators.add(new MinusTokenGenerator());
