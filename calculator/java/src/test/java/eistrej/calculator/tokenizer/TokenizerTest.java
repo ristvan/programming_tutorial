@@ -32,24 +32,16 @@ public class TokenizerTest {
 
     @Test
     public void tokenizingSubtractionShouldResultMinusToken() {
-        Tokenizer tokenizer = new Tokenizer("-");
+        checkTokenIsSubtraction("-");
+        checkTokenIsSubtraction(" -");
+        checkTokenIsSubtraction("- ");
+        checkTokenIsSubtraction(" - ");
+        checkTokenIsSubtraction(" \t- \t");
+    }
+
+    private void checkTokenIsSubtraction(String expression) {
+        Tokenizer tokenizer = new Tokenizer(expression);
         IToken nextToken = tokenizer.getNextToken();
-        assertTrue(nextToken instanceof IMinus);
-
-        tokenizer = new Tokenizer(" -");
-        nextToken = tokenizer.getNextToken();
-        assertTrue(nextToken instanceof IMinus);
-
-        tokenizer = new Tokenizer("- ");
-        nextToken = tokenizer.getNextToken();
-        assertTrue(nextToken instanceof IMinus);
-
-        tokenizer = new Tokenizer(" - ");
-        nextToken = tokenizer.getNextToken();
-        assertTrue(nextToken instanceof IMinus);
-
-        tokenizer = new Tokenizer(" \t- \t");
-        nextToken = tokenizer.getNextToken();
         assertTrue(nextToken instanceof IMinus);
     }
 
