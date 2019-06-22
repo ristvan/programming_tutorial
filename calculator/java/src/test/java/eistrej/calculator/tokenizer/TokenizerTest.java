@@ -65,8 +65,8 @@ public class TokenizerTest {
         nextToken = tokenizer.getNextToken();
         assertTrue(nextToken instanceof IAddition);
 
-//        nextToken = tokenizer.getNextToken();
-//        assertEquals(null, nextToken);
+        nextToken = tokenizer.getNextToken();
+        assertEquals(null, nextToken);
     }
 
     private void checkTokenIsDivision(String expression) {

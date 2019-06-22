@@ -6,7 +6,7 @@ import eistrej.calculator.tokenizer.tokens.IToken;
 public class DivisionTokenGenerator implements ITokenCreator {
     @Override
     public boolean isMatching(String expression) {
-        return expression.charAt(0) == '/';
+        return expression.length() > 0 && expression.charAt(0) == '/';
     }
 
     @Override

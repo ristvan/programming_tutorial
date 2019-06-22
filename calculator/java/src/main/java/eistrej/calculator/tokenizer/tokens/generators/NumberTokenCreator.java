@@ -10,7 +10,7 @@ public class NumberTokenCreator implements ITokenCreator {
     @Override
     public boolean isMatching(String expression){
         this.expression=expression;
-        return Character.isDigit(expression.charAt(0));
+        return expression.length() > 0 && Character.isDigit(expression.charAt(0));
     }
 
     @Override
