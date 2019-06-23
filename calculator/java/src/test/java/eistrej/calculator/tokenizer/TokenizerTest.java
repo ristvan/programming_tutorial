@@ -1,10 +1,9 @@
 package eistrej.calculator.tokenizer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import eistrej.calculator.tokenizer.tokens.*;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class TokenizerTest {
     @Test
@@ -66,7 +65,7 @@ public class TokenizerTest {
         assertTrue(nextToken instanceof IAddition);
 
         nextToken = tokenizer.getNextToken();
-        assertEquals(null, nextToken);
+        assertNull(nextToken);
     }
 
     @Test
@@ -81,7 +80,7 @@ public class TokenizerTest {
         assertTrue(nextToken instanceof IMultiplication);
 
         nextToken = tokenizer.getNextToken();
-        assertEquals(null, nextToken);
+        assertNull(nextToken);
     }
 
     @Test
@@ -128,7 +127,7 @@ public class TokenizerTest {
         assertEquals(8, ((INumber)nextToken).getValue());
 
         nextToken = tokenizer.getNextToken();
-        assertEquals(null, nextToken);
+        assertNull(nextToken);
     }
 
     @Test
@@ -175,7 +174,7 @@ public class TokenizerTest {
         assertEquals(8, ((INumber)nextToken).getValue());
 
         nextToken = tokenizer.getNextToken();
-        assertEquals(null, nextToken);
+        assertNull(nextToken);
     }
 
 
