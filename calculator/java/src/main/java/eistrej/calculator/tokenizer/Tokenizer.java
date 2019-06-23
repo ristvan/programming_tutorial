@@ -29,7 +29,7 @@ public class Tokenizer implements ITokenizer {
                 token = tokenCreator.getToken();
                 int length = tokenCreator.getTokenLength();
                 if (length < expression.length()) {
-                    expression = expression.substring(length + 1);
+                    expression = expression.substring(length).trim();
                 } else {
                     expression = "";
                 }

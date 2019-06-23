@@ -24,6 +24,6 @@ public class NumberTokenCreator implements ITokenCreator {
 
     @Override
     public int getTokenLength(){
-        return 1;
+        return index;
     }
 }

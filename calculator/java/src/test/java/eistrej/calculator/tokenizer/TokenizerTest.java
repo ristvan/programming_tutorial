@@ -69,6 +69,116 @@ public class TokenizerTest {
         assertEquals(null, nextToken);
     }
 
+    @Test
+    public void tokenizingANumberAndAMultiplicationShouldBeResultedCorrectly() {
+        String expression="28*";
+        Tokenizer tokenizer = new Tokenizer(expression);
+        IToken nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(28, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IMultiplication);
+
+        nextToken = tokenizer.getNextToken();
+        assertEquals(null, nextToken);
+    }
+
+    @Test
+    public void tokenizingLongExpressionShouldBeResultedCorrectly() {
+        String expression="28+12*42-23+64/8";
+        Tokenizer tokenizer = new Tokenizer(expression);
+        IToken nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(28, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IAddition);
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(12, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IMultiplication);
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(42, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IMinus);
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(23, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IAddition);
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(64, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IDivision);
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(8, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertEquals(null, nextToken);
+    }
+
+    @Test
+    public void tokenizingLongExpressionWithWhitespacesShouldBeResultedCorrectly() {
+        String expression=" 28 + 12\t*\t42 \t-\t 23\t\t+  64 /\t8\t";
+        Tokenizer tokenizer = new Tokenizer(expression);
+        IToken nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(28, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IAddition);
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(12, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IMultiplication);
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(42, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IMinus);
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(23, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IAddition);
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(64, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IDivision);
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(8, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertEquals(null, nextToken);
+    }
+
+
     private void checkTokenIsDivision(String expression) {
         Tokenizer tokenizer = new Tokenizer(expression);
         IToken nextToken = tokenizer.getNextToken();
