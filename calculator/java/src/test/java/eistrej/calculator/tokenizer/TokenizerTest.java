@@ -177,6 +177,52 @@ public class TokenizerTest {
         assertNull(nextToken);
     }
 
+    @Test
+    public void tokenizingLongExpressionWithVariousLengthNumbersShouldBeResultedCorrectly() {
+        String expression=" 281234+12*4289-2388+6/4568";
+        Tokenizer tokenizer = new Tokenizer(expression);
+        IToken nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(281234, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IAddition);
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(12, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IMultiplication);
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(4289, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IMinus);
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(2388, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IAddition);
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(6, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof IDivision);
+
+        nextToken = tokenizer.getNextToken();
+        assertTrue(nextToken instanceof INumber);
+        assertEquals(4568, ((INumber)nextToken).getValue());
+
+        nextToken = tokenizer.getNextToken();
+        assertNull(nextToken);
+    }
 
     private void checkTokenIsDivision(String expression) {
         Tokenizer tokenizer = new Tokenizer(expression);
