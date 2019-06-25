@@ -15,4 +15,12 @@ public class AdditionExpression implements IExpression {
     public void addRight(IExpression expression) {
         right = expression;
     }
+
+    public IExpression getLeft() {
+        return left;
+    }
+
+    public IExpression getRight() {
+        return right;
+    }
 }

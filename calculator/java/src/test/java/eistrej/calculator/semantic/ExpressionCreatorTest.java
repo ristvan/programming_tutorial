@@ -108,6 +108,11 @@ public class ExpressionCreatorTest {
         ExpressionCreator ec = new ExpressionCreator(tokenizer);
         IExpression expression = ec.createExpression();
         assertTrue("Expression is NOT an Addition", expression instanceof AdditionExpression);
+        AdditionExpression addExpression = (AdditionExpression) expression;
+        NumberExpression leftNumber = (NumberExpression) addExpression.getLeft();
+        assertEquals(42, leftNumber.evaluate());
+        NumberExpression rightNumber = (NumberExpression) addExpression.getRight();
+        assertEquals(28, rightNumber.evaluate());
         assertEquals(70, expression.evaluate());
     }
 }
