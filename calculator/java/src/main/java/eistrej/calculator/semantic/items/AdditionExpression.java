@@ -1,26 +1,26 @@
 package eistrej.calculator.semantic.items;
 
 public class AdditionExpression implements IExpression {
-    private IExpression left;
-    private IExpression right;
+    private IExpression augend;
+    private IExpression addend;
     @Override
     public int evaluate() {
-        return left.evaluate() + right.evaluate();
+        return augend.evaluate() + addend.evaluate();
     }
 
-    public void addLeft(IExpression expression) {
-        left = expression;
+    public void setAugend(IExpression expression) {
+        augend = expression;
     }
 
-    public void addRight(IExpression expression) {
-        right = expression;
+    public void setAddend(IExpression expression) {
+        addend = expression;
     }
 
-    public IExpression getLeft() {
-        return left;
+    public IExpression getAugend() {
+        return augend;
     }
 
-    public IExpression getRight() {
-        return right;
+    public IExpression getAddend() {
+        return addend;
     }
 }

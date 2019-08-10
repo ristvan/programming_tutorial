@@ -25,8 +25,8 @@ public class ExpressionCreator {
         }
         if (operation instanceof IAddition) {
             AdditionExpression expression = new AdditionExpression();
-            expression.addLeft(new NumberExpression(left.getValue()));
-            expression.addRight(new NumberExpression(right.getValue()));
+            expression.setAugend(new NumberExpression(left.getValue()));
+            expression.setAddend(new NumberExpression(right.getValue()));
             return expression;
         }
         SubtractionExpression expression = new SubtractionExpression();
