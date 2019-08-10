@@ -3,7 +3,9 @@ package eistrej.calculator.semantic;
 import eistrej.calculator.semantic.items.AdditionExpression;
 import eistrej.calculator.semantic.items.IExpression;
 import eistrej.calculator.semantic.items.NumberExpression;
+import eistrej.calculator.semantic.items.SubtractionExpression;
 import eistrej.calculator.tokenizer.ITokenizer;
+import eistrej.calculator.tokenizer.tokens.IAddition;
 import eistrej.calculator.tokenizer.tokens.INumber;
 import eistrej.calculator.tokenizer.tokens.IToken;
 
@@ -21,9 +23,15 @@ public class ExpressionCreator {
         if (operation == null) {
             return new NumberExpression(left.getValue());
         }
-        AdditionExpression expression = new AdditionExpression();
-        expression.addLeft(new NumberExpression(left.getValue()));
-        expression.addRight(new NumberExpression(right.getValue()));
+        if (operation instanceof IAddition) {
+            AdditionExpression expression = new AdditionExpression();
+            expression.addLeft(new NumberExpression(left.getValue()));
+            expression.addRight(new NumberExpression(right.getValue()));
+            return expression;
+        }
+        SubtractionExpression expression = new SubtractionExpression();
+        expression.setMinuend(new NumberExpression(left.getValue()));
+        expression.setSubtrahend(new NumberExpression(right.getValue()));
         return expression;
     }
 }
