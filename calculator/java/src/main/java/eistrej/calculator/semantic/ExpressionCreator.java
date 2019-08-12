@@ -14,14 +14,14 @@ interface IExpressionWrapper {
 
 public class ExpressionCreator {
     private final ITokenizer tokenizer;
+    private Stack<IExpression> expressions = new Stack<>();
+    private Stack<IExpressionWrapper> operators = new Stack<>();
 
     public ExpressionCreator(ITokenizer tokenizer) {
         this.tokenizer = tokenizer;
     }
 
     public IExpression createExpression() {
-        Stack<IExpression> expressions = new Stack<>();
-        Stack<IExpressionWrapper> operators = new Stack<>();
         IToken token = tokenizer.getNextToken();
         while (token != null) {
             if (token instanceof INumber) {
@@ -30,52 +30,24 @@ public class ExpressionCreator {
             } else if (operators.empty()) {
                 operators.push(createOperatorWrapper(token));
             } else {
-                IExpression right = expressions.pop();
-                IExpression left = expressions.pop();
                 IExpressionWrapper expressionWrapper = createOperatorWrapper(token);
-                expressionWrapper.setLeft(left);
-                expressionWrapper.setRight(right);
-                expressions.push(expressionWrapper.getExpression());
+                createOperationExpression(expressionWrapper);
             }
             token = tokenizer.getNextToken();
         }
         while (!operators.empty()) {
-            IExpression right = expressions.pop();
-            IExpression left = expressions.pop();
             IExpressionWrapper expressionWrapper = operators.pop();
-            expressionWrapper.setLeft(left);
-            expressionWrapper.setRight(right);
-            expressions.push(expressionWrapper.getExpression());
+            createOperationExpression(expressionWrapper);
         }
         return expressions.pop();
     }
 
-    private IExpression getExpression(INumber left, IToken operation, INumber right) {
-        if (operation instanceof IAddition) {
-            AdditionExpression expression = new AdditionExpression();
-            expression.setAugend(new NumberExpression(left.getValue()));
-            expression.setAddend(new NumberExpression(right.getValue()));
-            return expression;
-        }
-        if (operation instanceof IMinus) {
-            SubtractionExpression expression = new SubtractionExpression();
-            expression.setMinuend(new NumberExpression(left.getValue()));
-            expression.setSubtrahend(new NumberExpression(right.getValue()));
-            return expression;
-        }
-        if (operation instanceof IMultiplication) {
-            MultiplicationExpression expression = new MultiplicationExpression();
-            expression.setMultiplier(new NumberExpression(left.getValue()));
-            expression.setMulticand(new NumberExpression(right.getValue()));
-            return expression;
-        }
-        if (operation instanceof IDivision) {
-            DivisionExpression expression = new DivisionExpression();
-            expression.setDividend(new NumberExpression(left.getValue()));
-            expression.setDivisor(new NumberExpression(right.getValue()));
-            return expression;
-        }
-        return null;
+    private void createOperationExpression(IExpressionWrapper expressionWrapper) {
+        IExpression right = expressions.pop();
+        IExpression left = expressions.pop();
+        expressionWrapper.setLeft(left);
+        expressionWrapper.setRight(right);
+        expressions.push(expressionWrapper.getExpression());
     }
 
     private IExpressionWrapper createOperatorWrapper(IToken operation) {
