@@ -32,12 +32,14 @@ public class ExpressionCreator {
             } else {
                 IExpressionWrapper expressionWrapper = createOperatorWrapper(token);
                 createOperationExpression(expressionWrapper);
+                expressions.push(expressionWrapper.getExpression());
             }
             token = tokenizer.getNextToken();
         }
         while (!operators.empty()) {
             IExpressionWrapper expressionWrapper = operators.pop();
             createOperationExpression(expressionWrapper);
+            expressions.push(expressionWrapper.getExpression());
         }
         return expressions.pop();
     }
@@ -47,7 +49,6 @@ public class ExpressionCreator {
         IExpression left = expressions.pop();
         expressionWrapper.setLeft(left);
         expressionWrapper.setRight(right);
-        expressions.push(expressionWrapper.getExpression());
     }
 
     private IExpressionWrapper createOperatorWrapper(IToken operation) {
