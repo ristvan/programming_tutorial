@@ -114,12 +114,30 @@ public class ExpressionCreatorTest {
         ITokenizer tokenizer = new TokenizerStub(testTokens);
         ExpressionCreator ec = new ExpressionCreator(tokenizer);
         IExpression expression = ec.createExpression();
-        assertTrue("Expression is NOT an Multiplication", expression instanceof MultiplicationExpression);
+        assertTrue("Expression is NOT a Multiplication", expression instanceof MultiplicationExpression);
         MultiplicationExpression addExpression = (MultiplicationExpression) expression;
         NumberExpression multiplier = (NumberExpression) addExpression.getMultiplier();
         assertEquals(6, multiplier.evaluate());
         NumberExpression multicand = (NumberExpression) addExpression.getMulticand();
         assertEquals(7, multicand.evaluate());
         assertEquals(42, expression.evaluate());
+    }
+
+    @Test
+    public void whenTwoNumberIsGivenWithADivisionThatShouldBeResultedAsAHierarchy() {
+        List<IToken> testTokens = new LinkedList<>();
+        testTokens.add((INumber) () -> 42);
+        testTokens.add(new IDivision() {});
+        testTokens.add((INumber) () -> 7);
+        ITokenizer tokenizer = new TokenizerStub(testTokens);
+        ExpressionCreator ec = new ExpressionCreator(tokenizer);
+        IExpression expression = ec.createExpression();
+        assertTrue("Expression is NOT a Division", expression instanceof DivisionExpression);
+        DivisionExpression addExpression = (DivisionExpression) expression;
+        NumberExpression dividend = (NumberExpression) addExpression.getDividend();
+        assertEquals(42, dividend.evaluate());
+        NumberExpression divisor = (NumberExpression) addExpression.getDivisor();
+        assertEquals(7, divisor.evaluate());
+        assertEquals(6, expression.evaluate());
     }
 }
