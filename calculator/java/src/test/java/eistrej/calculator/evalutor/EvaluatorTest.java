@@ -85,7 +85,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
         assertEquals(6, evaluator.evaluate("12-2-4"));
         assertEquals(10, evaluator.evaluate("122-22-90"));
-        assertEquals(15, evaluator.evaluate("1024 - 512-256\t-128\t-\t-64-32-17" ));
+        assertEquals(15, evaluator.evaluate("1024 - 512-256\t-128\t-\t64-32-17" ));
         assertEquals(1800, evaluator.evaluate("\t10000\t-\t8196 -\t4\t"));
     }
 
