@@ -1,6 +1,6 @@
 package eistrej.calculator.semantic.items;
 
-public class SubtractionExpression implements IExpression {
+public class SubtractionExpression implements IOperator {
     private IExpression minuend;
     private IExpression subtrahend;
 
@@ -9,19 +9,23 @@ public class SubtractionExpression implements IExpression {
         return minuend.evaluate() - subtrahend.evaluate();
     }
 
-    public void setMinuend(IExpression minuend) {
+    @Override
+    public void setLeft(IExpression minuend) {
         this.minuend = minuend;
     }
 
-    public void setSubtrahend(IExpression subtrahend) {
+    @Override
+    public void setRight(IExpression subtrahend) {
         this.subtrahend = subtrahend;
     }
 
-    public IExpression getMinuend() {
+    @Override
+    public IExpression getLeft() {
         return minuend;
     }
 
-    public IExpression getSubtrahend() {
+    @Override
+    public IExpression getRight() {
         return subtrahend;
     }
 }

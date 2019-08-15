@@ -1,6 +1,6 @@
 package eistrej.calculator.semantic.items;
 
-public class DivisionExpression implements IExpression {
+public class DivisionExpression implements IOperator {
     private IExpression dividend;
     private IExpression divisor;
 
@@ -9,19 +9,23 @@ public class DivisionExpression implements IExpression {
         return dividend.evaluate() / divisor.evaluate();
     }
 
-    public IExpression getDividend() {
+    @Override
+    public IExpression getLeft() {
         return dividend;
     }
 
-    public IExpression getDivisor() {
+    @Override
+    public IExpression getRight() {
         return divisor;
     }
 
-    public void setDividend(IExpression dividend) {
+    @Override
+    public void setLeft(IExpression dividend) {
         this.dividend = dividend;
     }
 
-    public void setDivisor(IExpression divisor) {
+    @Override
+    public void setRight(IExpression divisor) {
         this.divisor = divisor;
     }
 }

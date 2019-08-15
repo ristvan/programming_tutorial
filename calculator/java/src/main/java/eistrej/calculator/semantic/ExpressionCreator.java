@@ -6,16 +6,10 @@ import eistrej.calculator.tokenizer.tokens.*;
 
 import java.util.Stack;
 
-interface IExpressionWrapper {
-    void setLeft(IExpression expression);
-    void setRight(IExpression expression);
-    IExpression getExpression();
-}
-
 public class ExpressionCreator {
     private final ITokenizer tokenizer;
     private Stack<IExpression> expressions = new Stack<>();
-    private Stack<IExpressionWrapper> operators = new Stack<>();
+    private Stack<IOperator> operators = new Stack<>();
 
     public ExpressionCreator(ITokenizer tokenizer) {
         this.tokenizer = tokenizer;
@@ -30,102 +24,38 @@ public class ExpressionCreator {
             } else if (operators.empty()) {
                 operators.push(createOperatorWrapper(token));
             } else {
-                IExpressionWrapper expressionWrapper = createOperatorWrapper(token);
-                createOperationExpression(expressionWrapper);
-                expressions.push(expressionWrapper.getExpression());
+                IOperator operation = createOperatorWrapper(token);
+                createOperationExpression(operation);
+                expressions.push(operation);
             }
             token = tokenizer.getNextToken();
         }
         while (!operators.empty()) {
-            IExpressionWrapper expressionWrapper = operators.pop();
-            createOperationExpression(expressionWrapper);
-            expressions.push(expressionWrapper.getExpression());
+            IOperator operator = operators.pop();
+            createOperationExpression(operator);
+            expressions.push(operator);
         }
         return expressions.pop();
     }
 
-    private void createOperationExpression(IExpressionWrapper expressionWrapper) {
+    private void createOperationExpression(IOperator operator) {
         IExpression right = expressions.pop();
         IExpression left = expressions.pop();
-        expressionWrapper.setLeft(left);
-        expressionWrapper.setRight(right);
+        operator.setLeft(left);
+        operator.setRight(right);
     }
 
-    private IExpressionWrapper createOperatorWrapper(IToken operation) {
-        IExpressionWrapper operatorWrapper = null;
+    private IOperator createOperatorWrapper(IToken operation) {
+        IOperator operator = null;
         if (operation instanceof IAddition) {
-            operatorWrapper = new IExpressionWrapper() {
-                AdditionExpression addition = new AdditionExpression();
-                @Override
-                public void setLeft(IExpression expression) {
-                    addition.setAugend(expression);
-                }
-
-                @Override
-                public void setRight(IExpression expression) {
-                    addition.setAddend(expression);
-                }
-
-                @Override
-                public IExpression getExpression() {
-                    return addition;
-                }
-            };
+            operator = new AdditionExpression();
         } else if (operation instanceof IMinus) {
-            operatorWrapper = new IExpressionWrapper() {
-                SubtractionExpression subtraction = new SubtractionExpression();
-                @Override
-                public void setLeft(IExpression expression) {
-                    subtraction.setMinuend(expression);
-                }
-
-                @Override
-                public void setRight(IExpression expression) {
-                    subtraction.setSubtrahend(expression);
-                }
-
-                @Override
-                public IExpression getExpression() {
-                    return subtraction;
-                }
-            };
+            operator = new SubtractionExpression();
         } else if (operation instanceof IMultiplication) {
-            operatorWrapper = new IExpressionWrapper() {
-                MultiplicationExpression multiplication = new MultiplicationExpression();
-                @Override
-                public void setLeft(IExpression expression) {
-                    multiplication.setMultiplier(expression);
-                }
-
-                @Override
-                public void setRight(IExpression expression) {
-                    multiplication.setMulticand(expression);
-                }
-
-                @Override
-                public IExpression getExpression() {
-                    return multiplication;
-                }
-            };
+            operator = new MultiplicationExpression();
         } else if (operation instanceof IDivision) {
-            operatorWrapper = new IExpressionWrapper() {
-                DivisionExpression division = new DivisionExpression();
-                @Override
-                public void setLeft(IExpression expression) {
-                    division.setDividend(expression);
-                }
-
-                @Override
-                public void setRight(IExpression expression) {
-                    division.setDivisor(expression);
-                }
-
-                @Override
-                public IExpression getExpression() {
-                    return division;
-                }
-            };
+            operator = new DivisionExpression();
         }
-        return operatorWrapper;
+        return operator;
     }
 }

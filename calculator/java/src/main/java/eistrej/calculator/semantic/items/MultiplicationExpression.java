@@ -1,6 +1,6 @@
 package eistrej.calculator.semantic.items;
 
-public class MultiplicationExpression implements IExpression{
+public class MultiplicationExpression implements IOperator{
     private IExpression multiplier;
     private IExpression multicand;
 
@@ -9,19 +9,23 @@ public class MultiplicationExpression implements IExpression{
         return multiplier.evaluate() * multicand.evaluate();
     }
 
-    public IExpression getMultiplier() {
+    @Override
+    public IExpression getLeft() {
         return multiplier;
     }
 
-    public void setMultiplier(IExpression multiplier) {
+    @Override
+    public void setLeft(IExpression multiplier) {
         this.multiplier = multiplier;
     }
 
-    public IExpression getMulticand() {
+    @Override
+    public IExpression getRight() {
         return multicand;
     }
 
-    public void setMulticand(IExpression multicand) {
+    @Override
+    public void setRight(IExpression multicand) {
         this.multicand = multicand;
     }
 }
