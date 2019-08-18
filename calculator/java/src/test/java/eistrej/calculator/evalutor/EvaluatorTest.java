@@ -107,4 +107,24 @@ public class EvaluatorTest {
         assertEquals(3, evaluator.evaluate(" 154 / 7 / 3\t/ 2\t"));
         assertEquals(91, evaluator.evaluate("510510 / 17 / 2 / 5 / 11 / 3"));
     }
+
+    @Test
+    public void whenOnlyAdditionAndSubtractionIsGivenTheExpressionShouldBeEvaluatedCorrectly() {
+        Evaluator evaluator = new Evaluator();
+        assertEquals(3, evaluator.evaluate("1+2-3+4+5-6"));
+        assertEquals(40, evaluator.evaluate("125-25-50+10+8-28"));
+        assertEquals(80, evaluator.evaluate("100 +100 - 75 - 45"));
+        assertEquals(50, evaluator.evaluate(" 154 - 7 + 3\t- 100\t"));
+        assertEquals(250003, evaluator.evaluate("510510 - 510 + 10000 - 300000 + 30000 + 3"));
+    }
+
+    @Test
+    public void whenOnlyMultiplicationAndDivisonIsGivenTheExpressionShouldBeEvaluatedCorrectly() {
+        Evaluator evaluator = new Evaluator();
+        assertEquals(2, evaluator.evaluate("1*2*3*4*5/6/10"));
+        assertEquals(40, evaluator.evaluate("6/3*2*9/3/3*10"));
+        assertEquals(48, evaluator.evaluate("100 *100 / 25 / 20/5*12"));
+        assertEquals(6600, evaluator.evaluate(" 154 / 7 * 3\t* 100\t"));
+        assertEquals(5, evaluator.evaluate("510510 / 510 / 1001 * 300000 / 30000 / 2"));
+    }
 }

@@ -25,8 +25,10 @@ public class ExpressionCreator {
                 operators.push(createOperatorWrapper(token));
             } else {
                 IOperator operation = createOperatorWrapper(token);
-                createOperationExpression(operation);
-                expressions.push(operation);
+                IOperator old_operation = operators.pop();
+                operators.push(operation);
+                createOperationExpression(old_operation);
+                expressions.push(old_operation);
             }
             token = tokenizer.getNextToken();
         }
