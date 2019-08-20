@@ -76,7 +76,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
         assertEquals(6, evaluator.evaluate("1+2+3"));
         assertEquals(10, evaluator.evaluate("1+2+3 + 4"));
-        assertEquals(15, evaluator.evaluate("1+2+3 + 4\t+\t5" ));
+        assertEquals(15, evaluator.evaluate("1+2+3 + 4\t+\t5"));
         assertEquals(21, evaluator.evaluate("1+2+3 + 4\t+\t5 +\t6\t"));
     }
 
@@ -85,7 +85,7 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
         assertEquals(6, evaluator.evaluate("12-2-4"));
         assertEquals(10, evaluator.evaluate("122-22-90"));
-        assertEquals(15, evaluator.evaluate("1024 - 512-256\t-128\t-\t64-32-17" ));
+        assertEquals(15, evaluator.evaluate("1024 - 512-256\t-128\t-\t64-32-17"));
         assertEquals(1800, evaluator.evaluate("\t10000\t-\t8196 -\t4\t"));
     }
 
@@ -126,5 +126,14 @@ public class EvaluatorTest {
         assertEquals(48, evaluator.evaluate("100 *100 / 25 / 20/5*12"));
         assertEquals(6600, evaluator.evaluate(" 154 / 7 * 3\t* 100\t"));
         assertEquals(5, evaluator.evaluate("510510 / 510 / 1001 * 300000 / 30000 / 2"));
+    }
+
+    @Test
+    public void whenGeneralExpressioinIsGivenTheExpressionShouldBeEvaluatedCorrectly() {
+        Evaluator evaluator = new Evaluator();
+        assertEquals(8, evaluator.evaluate("1+2*3+4-6/2"));
+        assertEquals(5, evaluator.evaluate("3+4*2/4"));
+        assertEquals(4, evaluator.evaluate("3+4*2/4-1"));
+        assertEquals(4, evaluator.evaluate("3+4*6/3-7"));
     }
 }

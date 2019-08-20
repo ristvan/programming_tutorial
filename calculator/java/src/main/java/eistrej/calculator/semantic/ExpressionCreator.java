@@ -22,32 +22,53 @@ public class ExpressionCreator {
                 INumber number = (INumber) token;
                 expressions.push(new NumberExpression(number.getValue()));
             } else if (operators.empty()) {
-                operators.push(createOperatorWrapper(token));
+                operators.push(createOperatorExpression(token));
             } else {
-                IOperator operation = createOperatorWrapper(token);
-                IOperator old_operation = operators.pop();
-                operators.push(operation);
-                createOperationExpression(old_operation);
-                expressions.push(old_operation);
+                IOperator new_operation = createOperatorExpression(token);
+                IOperator last_stored_operation = operators.peek();
+                int new_precedence = getPrecedence(new_operation);
+                int last_stored_precedence = getPrecedence(last_stored_operation);
+                while (!operators.empty() && last_stored_precedence >= new_precedence) {
+                    fillOperationExpression(last_stored_operation);
+                    operators.pop();
+                    expressions.push(last_stored_operation);
+                    if (!operators.empty()) {
+                        last_stored_operation = operators.peek();
+                        last_stored_precedence = getPrecedence(last_stored_operation);
+                    }
+                }
+                operators.push(new_operation);
             }
             token = tokenizer.getNextToken();
         }
         while (!operators.empty()) {
             IOperator operator = operators.pop();
-            createOperationExpression(operator);
+            fillOperationExpression(operator);
             expressions.push(operator);
         }
         return expressions.pop();
     }
 
-    private void createOperationExpression(IOperator operator) {
+    private void fillOperationExpression(IOperator operator) {
         IExpression right = expressions.pop();
         IExpression left = expressions.pop();
         operator.setLeft(left);
         operator.setRight(right);
     }
 
-    private IOperator createOperatorWrapper(IToken operation) {
+    private int getPrecedence(IOperator operator) {
+        int precedence = 1;
+        if (operator instanceof AdditionExpression || operator instanceof SubtractionExpression) {
+            return precedence;
+        }
+        precedence++;
+        if (operator instanceof MultiplicationExpression || operator instanceof DivisionExpression) {
+            return precedence;
+        }
+        return 0;
+    }
+
+    private IOperator createOperatorExpression(IToken operation) {
         IOperator operator = null;
         if (operation instanceof IAddition) {
             operator = new AdditionExpression();
