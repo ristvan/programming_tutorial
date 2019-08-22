@@ -1,6 +1,6 @@
 package eistrej.calculator.semantic.items;
 
-public class AdditionExpression implements IOperator {
+public class AdditionExpression implements IOperatorExpression {
     private IExpression augend;
     private IExpression addend;
 

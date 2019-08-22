@@ -1,6 +1,6 @@
 package eistrej.calculator.semantic.items;
 
-public class DivisionExpression implements IOperator {
+public class DivisionExpression implements IOperatorExpression {
     private IExpression dividend;
     private IExpression divisor;
 

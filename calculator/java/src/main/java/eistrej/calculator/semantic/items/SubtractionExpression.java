@@ -1,6 +1,6 @@
 package eistrej.calculator.semantic.items;
 
-public class SubtractionExpression implements IOperator {
+public class SubtractionExpression implements IOperatorExpression {
     private IExpression minuend;
     private IExpression subtrahend;
 

@@ -1,6 +1,6 @@
 package eistrej.calculator.semantic.items;
 
-public class MultiplicationExpression implements IOperator{
+public class MultiplicationExpression implements IOperatorExpression {
     private IExpression multiplier;
     private IExpression multicand;
 

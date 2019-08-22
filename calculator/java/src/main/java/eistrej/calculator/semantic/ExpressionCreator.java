@@ -9,7 +9,7 @@ import java.util.Stack;
 public class ExpressionCreator {
     private final ITokenizer tokenizer;
     private Stack<IExpression> expressions = new Stack<>();
-    private Stack<IOperator> operators = new Stack<>();
+    private Stack<IOperatorExpression> operators = new Stack<>();
 
     public ExpressionCreator(ITokenizer tokenizer) {
         this.tokenizer = tokenizer;
@@ -24,8 +24,8 @@ public class ExpressionCreator {
             } else if (operators.empty()) {
                 operators.push(createOperatorExpression(token));
             } else {
-                IOperator new_operation = createOperatorExpression(token);
-                IOperator last_stored_operation = operators.peek();
+                IOperatorExpression new_operation = createOperatorExpression(currentToken);
+                IOperatorExpression last_stored_operation = operators.peek();
                 int new_precedence = getPrecedence(new_operation);
                 int last_stored_precedence = getPrecedence(last_stored_operation);
                 while (!operators.empty() && last_stored_precedence >= new_precedence) {
@@ -42,21 +42,21 @@ public class ExpressionCreator {
             token = tokenizer.getNextToken();
         }
         while (!operators.empty()) {
-            IOperator operator = operators.pop();
+            IOperatorExpression operator = operators.pop();
             fillOperationExpression(operator);
             expressions.push(operator);
         }
         return expressions.pop();
     }
 
-    private void fillOperationExpression(IOperator operator) {
+    private void fillOperationExpression(IOperatorExpression operator) {
         IExpression right = expressions.pop();
         IExpression left = expressions.pop();
         operator.setLeft(left);
         operator.setRight(right);
     }
 
-    private int getPrecedence(IOperator operator) {
+    private int getPrecedence(IOperatorExpression operator) {
         int precedence = 1;
         if (operator instanceof AdditionExpression || operator instanceof SubtractionExpression) {
             return precedence;
@@ -68,8 +68,8 @@ public class ExpressionCreator {
         return 0;
     }
 
-    private IOperator createOperatorExpression(IToken operation) {
-        IOperator operator = null;
+    private IOperatorExpression createOperatorExpression(IToken operation) {
+        IOperatorExpression operator = null;
         if (operation instanceof IAddition) {
             operator = new AdditionExpression();
         } else if (operation instanceof IMinus) {
