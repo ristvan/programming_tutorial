@@ -5,11 +5,6 @@ import eistrej.calculator.semantic.items.IExpression;
 import eistrej.calculator.tokenizer.ITokenizer;
 import eistrej.calculator.tokenizer.Tokenizer;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.function.IntBinaryOperator;
-
 public class Evaluator {
     public int evaluate(String input) {
         ITokenizer tokenizer = new Tokenizer(input);

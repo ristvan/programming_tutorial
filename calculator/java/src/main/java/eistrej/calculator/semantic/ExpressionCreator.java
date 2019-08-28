@@ -10,52 +10,51 @@ public class ExpressionCreator {
     private final ITokenizer tokenizer;
     private Stack<IExpression> expressions = new Stack<>();
     private Stack<IOperatorExpression> operators = new Stack<>();
-    private IToken currentToken;
 
     public ExpressionCreator(ITokenizer tokenizer) {
         this.tokenizer = tokenizer;
     }
 
     public IExpression createExpression() {
-        currentToken = tokenizer.getNextToken();
+        IToken currentToken = tokenizer.getNextToken();
         while (currentToken != null) {
-            handleToken();
+            handleToken(currentToken);
             currentToken = tokenizer.getNextToken();
         }
         moveRemainingOperatorsIntoExpressions();
         return expressions.pop();
     }
 
-    private void handleToken() {
-        if (currentToken instanceof INumber) {
-            handleNumber();
+    private void handleToken(IToken token) {
+        if (token instanceof INumber) {
+            handleNumber((INumber) token);
         } else {
-            handleOperator();
+            handleOperator(token);
         }
     }
 
-    private void handleOperator() {
-        IOperatorExpression newOperatorExpression = createOperatorExpression(currentToken);
+    private void handleOperator(IToken operatorToken) {
+        IOperatorExpression newOperatorExpression = createOperatorExpression(operatorToken);
         if (!operators.empty()) {
-            IOperatorExpression lastStoredOperation = operators.peek();
-            int newPrecedence = getPrecedence(newOperatorExpression);
-            int lastStoredPrecedence = getPrecedence(lastStoredOperation);
-            while (!operators.empty() && lastStoredPrecedence >= newPrecedence) {
+            while (storedOperationHasHigherPrecedence(newOperatorExpression)) {
+                IOperatorExpression lastStoredOperation = operators.pop();
                 fillOperationExpression(lastStoredOperation);
-                operators.pop();
                 expressions.push(lastStoredOperation);
-                if (!operators.empty()) {
-                    lastStoredOperation = operators.peek();
-                    lastStoredPrecedence = getPrecedence(lastStoredOperation);
-                }
             }
         }
         operators.push(newOperatorExpression);
     }
 
-    private void handleNumber() {
-        INumber number = (INumber) currentToken;
-        expressions.push(new NumberExpression(number.getValue()));
+    private boolean storedOperationHasHigherPrecedence(IOperatorExpression newOperatorExpression) {
+        if (operators.empty()) {
+            return false;
+        }
+        IOperatorExpression lastStoredOperation = operators.peek();
+        return getPrecedence(lastStoredOperation) >= getPrecedence(newOperatorExpression);
+    }
+
+    private void handleNumber(INumber numberToken) {
+        expressions.push(new NumberExpression(numberToken.getValue()));
     }
 
     private void moveRemainingOperatorsIntoExpressions() {
