@@ -129,7 +129,7 @@ public class EvaluatorTest {
     }
 
     @Test
-    public void whenGeneralExpressioinIsGivenTheExpressionShouldBeEvaluatedCorrectly() {
+    public void whenGeneralExpressionIsGivenTheExpressionShouldBeEvaluatedCorrectly() {
         Evaluator evaluator = new Evaluator();
         assertEquals(8, evaluator.evaluate("1+2*3+4-6/2"));
         assertEquals(5, evaluator.evaluate("3+4*2/4"));
