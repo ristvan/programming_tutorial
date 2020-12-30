@@ -1,8 +1,8 @@
 package ristvan.calculator.semantic.items;
 
-public class AdditionExpression implements IOperatorExpression {
-    private IExpression augend;
-    private IExpression addend;
+public class AdditionExpression implements OperatorExpression {
+    private Expression augend;
+    private Expression addend;
 
     @Override
     public int evaluate() {
@@ -10,22 +10,22 @@ public class AdditionExpression implements IOperatorExpression {
     }
 
     @Override
-    public void setLeft(IExpression expression) {
+    public void setLeft(Expression expression) {
         augend = expression;
     }
 
     @Override
-    public void setRight(IExpression expression) {
+    public void setRight(Expression expression) {
         addend = expression;
     }
 
     @Override
-    public IExpression getLeft() {
+    public Expression getLeft() {
         return augend;
     }
 
     @Override
-    public IExpression getRight() {
+    public Expression getRight() {
         return addend;
     }
 }

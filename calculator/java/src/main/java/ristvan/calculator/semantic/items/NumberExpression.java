@@ -1,6 +1,6 @@
 package ristvan.calculator.semantic.items;
 
-public class NumberExpression implements IExpression {
+public class NumberExpression implements Expression {
     private final int value;
 
     public NumberExpression(int value) {

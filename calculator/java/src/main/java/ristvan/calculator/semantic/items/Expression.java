@@ -1,5 +1,5 @@
 package ristvan.calculator.semantic.items;
 
-public interface IExpression {
+public interface Expression {
     int evaluate();
 }

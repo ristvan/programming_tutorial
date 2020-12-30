@@ -1,8 +1,8 @@
 package ristvan.calculator.semantic.items;
 
-public class DivisionExpression implements IOperatorExpression {
-    private IExpression dividend;
-    private IExpression divisor;
+public class DivisionExpression implements OperatorExpression {
+    private Expression dividend;
+    private Expression divisor;
 
     @Override
     public int evaluate() {
@@ -10,22 +10,22 @@ public class DivisionExpression implements IOperatorExpression {
     }
 
     @Override
-    public IExpression getLeft() {
+    public Expression getLeft() {
         return dividend;
     }
 
     @Override
-    public IExpression getRight() {
+    public Expression getRight() {
         return divisor;
     }
 
     @Override
-    public void setLeft(IExpression dividend) {
+    public void setLeft(Expression dividend) {
         this.dividend = dividend;
     }
 
     @Override
-    public void setRight(IExpression divisor) {
+    public void setRight(Expression divisor) {
         this.divisor = divisor;
     }
 }

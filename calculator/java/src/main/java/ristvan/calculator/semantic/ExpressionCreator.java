@@ -9,14 +9,14 @@ import java.util.Stack;
 
 public class ExpressionCreator {
     private final Tokenizer tokenizer;
-    private Stack<IExpression> expressions = new Stack<>();
-    private Stack<IOperatorExpression> operators = new Stack<>();
+    private Stack<Expression> expressions = new Stack<>();
+    private Stack<OperatorExpression> operators = new Stack<>();
 
     public ExpressionCreator(Tokenizer tokenizer) {
         this.tokenizer = tokenizer;
     }
 
-    public IExpression createExpression() {
+    public Expression createExpression() {
         Token currentToken = tokenizer.getNextToken();
         while (currentToken != null) {
             handleToken(currentToken);
@@ -35,10 +35,10 @@ public class ExpressionCreator {
     }
 
     private void handleOperator(Token operatorToken) {
-        IOperatorExpression newOperatorExpression = createOperatorExpression(operatorToken);
+        OperatorExpression newOperatorExpression = createOperatorExpression(operatorToken);
         if (!operators.empty()) {
             while (storedOperationHasHigherPrecedence(newOperatorExpression)) {
-                IOperatorExpression lastStoredOperation = operators.pop();
+                OperatorExpression lastStoredOperation = operators.pop();
                 fillOperationExpression(lastStoredOperation);
                 expressions.push(lastStoredOperation);
             }
@@ -46,11 +46,11 @@ public class ExpressionCreator {
         operators.push(newOperatorExpression);
     }
 
-    private boolean storedOperationHasHigherPrecedence(IOperatorExpression newOperatorExpression) {
+    private boolean storedOperationHasHigherPrecedence(OperatorExpression newOperatorExpression) {
         if (operators.empty()) {
             return false;
         }
-        IOperatorExpression lastStoredOperation = operators.peek();
+        OperatorExpression lastStoredOperation = operators.peek();
         return getPrecedence(lastStoredOperation) >= getPrecedence(newOperatorExpression);
     }
 
@@ -60,20 +60,20 @@ public class ExpressionCreator {
 
     private void moveRemainingOperatorsIntoExpressions() {
         while (!operators.empty()) {
-            IOperatorExpression operator = operators.pop();
+            OperatorExpression operator = operators.pop();
             fillOperationExpression(operator);
             expressions.push(operator);
         }
     }
 
-    private void fillOperationExpression(IOperatorExpression operator) {
-        IExpression right = expressions.pop();
-        IExpression left = expressions.pop();
+    private void fillOperationExpression(OperatorExpression operator) {
+        Expression right = expressions.pop();
+        Expression left = expressions.pop();
         operator.setLeft(left);
         operator.setRight(right);
     }
 
-    private int getPrecedence(IOperatorExpression operator) {
+    private int getPrecedence(OperatorExpression operator) {
         int precedence = 1;
         if (operator instanceof AdditionExpression || operator instanceof SubtractionExpression) {
             return precedence;
@@ -85,8 +85,8 @@ public class ExpressionCreator {
         return 0;
     }
 
-    private IOperatorExpression createOperatorExpression(Token operation) {
-        IOperatorExpression operator = null;
+    private OperatorExpression createOperatorExpression(Token operation) {
+        OperatorExpression operator = null;
         if (operation instanceof Addition) {
             operator = new AdditionExpression();
         } else if (operation instanceof Minus) {
