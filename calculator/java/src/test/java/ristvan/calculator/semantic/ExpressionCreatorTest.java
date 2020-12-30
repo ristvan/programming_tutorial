@@ -29,6 +29,12 @@ class TokenizerStub implements Tokenizer {
 }
 
 public class ExpressionCreatorTest {
+
+    public static final String FIRST_ADDEND_IS_NOT_A_NUMBER = "First addend is NOT a Number";
+    public static final String SECOND_ADDEND_IS_NOT_A_NUMBER = "Second addend is NOT a Number";
+    public static final String THIRD_AUGEND_IS_NOT_A_NUMBER = "Third augend is NOT a Number";
+    public static final String THIRD_ADDEND_IS_NOT_A_NUMBER = "Third addend is NOT a Number";
+
     @Test
     public void verifyThatTokenizerStubIsWorkingCorrectlyTest() {
         List<Token> testTokens = new LinkedList<>();
@@ -162,7 +168,7 @@ public class ExpressionCreatorTest {
         Expression augend1 = addExpression1.getLeft();
         Expression addend1 = addExpression1.getRight();
         assertTrue("First augend is NOT an Addition", augend1 instanceof AdditionExpression);
-        assertTrue("First addend is NOT a Number", addend1 instanceof NumberExpression);
+        assertTrue(FIRST_ADDEND_IS_NOT_A_NUMBER, addend1 instanceof NumberExpression);
         assertEquals(6, augend1.evaluate());
         assertEquals(4, addend1.evaluate());
 
@@ -170,15 +176,15 @@ public class ExpressionCreatorTest {
         Expression augend2 = addExpression2.getLeft();
         Expression addend2 = addExpression2.getRight();
         assertTrue("Second augend is NOT an Addition", augend2 instanceof AdditionExpression);
-        assertTrue("Second addend is NOT a Number", addend2 instanceof NumberExpression);
+        assertTrue(SECOND_ADDEND_IS_NOT_A_NUMBER, addend2 instanceof NumberExpression);
         assertEquals(3, augend2.evaluate());
         assertEquals(3, addend2.evaluate());
 
         AdditionExpression addExpression3 = (AdditionExpression) augend2;
         Expression augend3 = addExpression3.getLeft();
         Expression addend3 = addExpression3.getRight();
-        assertTrue("Third augend is NOT a Number", augend3 instanceof NumberExpression);
-        assertTrue("Third addend is NOT a Number", addend3 instanceof NumberExpression);
+        assertTrue(THIRD_AUGEND_IS_NOT_A_NUMBER, augend3 instanceof NumberExpression);
+        assertTrue(THIRD_ADDEND_IS_NOT_A_NUMBER, addend3 instanceof NumberExpression);
         assertEquals(1, augend3.evaluate());
         assertEquals(2, addend3.evaluate());
 
@@ -205,7 +211,7 @@ public class ExpressionCreatorTest {
         Expression minuend1 = subtractionExpression1.getLeft();
         Expression subtrahend1 = subtractionExpression1.getRight();
         assertTrue("First augend is NOT an Subtraction", minuend1 instanceof SubtractionExpression);
-        assertTrue("First addend is NOT a Number", subtrahend1 instanceof NumberExpression);
+        assertTrue(FIRST_ADDEND_IS_NOT_A_NUMBER, subtrahend1 instanceof NumberExpression);
         assertEquals(20, minuend1.evaluate());
         assertEquals(10, subtrahend1.evaluate());
 
@@ -213,15 +219,15 @@ public class ExpressionCreatorTest {
         Expression minuend2 = subtractionExpression2.getLeft();
         Expression subtrahend2 = subtractionExpression2.getRight();
         assertTrue("Second augend is NOT an Subtraction", minuend2 instanceof SubtractionExpression);
-        assertTrue("Second addend is NOT a Number", subtrahend2 instanceof NumberExpression);
+        assertTrue(SECOND_ADDEND_IS_NOT_A_NUMBER, subtrahend2 instanceof NumberExpression);
         assertEquals(50, minuend2.evaluate());
         assertEquals(30, subtrahend2.evaluate());
 
         SubtractionExpression subtractionExpression3 = (SubtractionExpression) minuend2;
         Expression minuend3 = subtractionExpression3.getLeft();
         Expression subtrahend3 = subtractionExpression3.getRight();
-        assertTrue("Third augend is NOT a Number", minuend3 instanceof NumberExpression);
-        assertTrue("Third addend is NOT a Number", subtrahend3 instanceof NumberExpression);
+        assertTrue(THIRD_AUGEND_IS_NOT_A_NUMBER, minuend3 instanceof NumberExpression);
+        assertTrue(THIRD_ADDEND_IS_NOT_A_NUMBER, subtrahend3 instanceof NumberExpression);
         assertEquals(100, minuend3.evaluate());
         assertEquals(50, subtrahend3.evaluate());
 
@@ -248,7 +254,7 @@ public class ExpressionCreatorTest {
         Expression multiplier1 = multiplicationExpression1.getLeft();
         Expression multicand1 = multiplicationExpression1.getRight();
         assertTrue("First augend is NOT an Multiplication", multiplier1 instanceof MultiplicationExpression);
-        assertTrue("First addend is NOT a Number", multicand1 instanceof NumberExpression);
+        assertTrue(FIRST_ADDEND_IS_NOT_A_NUMBER, multicand1 instanceof NumberExpression);
         assertEquals(6, multiplier1.evaluate());
         assertEquals(4, multicand1.evaluate());
 
@@ -256,15 +262,15 @@ public class ExpressionCreatorTest {
         Expression multiplier2 = multiplicationExpression2.getLeft();
         Expression multicand2 = multiplicationExpression2.getRight();
         assertTrue("Second augend is NOT an Multiplication", multiplier2 instanceof MultiplicationExpression);
-        assertTrue("Second addend is NOT a Number", multicand2 instanceof NumberExpression);
+        assertTrue(SECOND_ADDEND_IS_NOT_A_NUMBER, multicand2 instanceof NumberExpression);
         assertEquals(2, multiplier2.evaluate());
         assertEquals(3, multicand2.evaluate());
 
         MultiplicationExpression multiplicationExpression3 = (MultiplicationExpression) multiplier2;
         Expression multiplier3 = multiplicationExpression3.getLeft();
         Expression multicand3 = multiplicationExpression3.getRight();
-        assertTrue("Third augend is NOT a Number", multiplier3 instanceof NumberExpression);
-        assertTrue("Third addend is NOT a Number", multicand3 instanceof NumberExpression);
+        assertTrue(THIRD_AUGEND_IS_NOT_A_NUMBER, multiplier3 instanceof NumberExpression);
+        assertTrue(THIRD_ADDEND_IS_NOT_A_NUMBER, multicand3 instanceof NumberExpression);
         assertEquals(1, multiplier3.evaluate());
         assertEquals(2, multicand3.evaluate());
 
