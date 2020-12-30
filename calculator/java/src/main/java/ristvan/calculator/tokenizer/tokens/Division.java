@@ -1,4 +1,4 @@
 package ristvan.calculator.tokenizer.tokens;
 
-public interface IMinus extends IToken {
+public interface Division extends Token {
 }

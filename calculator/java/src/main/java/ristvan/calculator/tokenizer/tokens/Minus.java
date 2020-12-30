@@ -1,4 +1,4 @@
 package ristvan.calculator.tokenizer.tokens;
 
-public interface IAddition extends IToken {
+public interface Minus extends Token {
 }

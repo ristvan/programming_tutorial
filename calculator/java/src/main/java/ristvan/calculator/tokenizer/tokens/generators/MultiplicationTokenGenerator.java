@@ -1,17 +1,17 @@
 package ristvan.calculator.tokenizer.tokens.generators;
 
-import ristvan.calculator.tokenizer.tokens.IMultiplication;
-import ristvan.calculator.tokenizer.tokens.IToken;
+import ristvan.calculator.tokenizer.tokens.Multiplication;
+import ristvan.calculator.tokenizer.tokens.Token;
 
-public class MultiplicationTokenGenerator implements ITokenCreator {
+public class MultiplicationTokenGenerator implements TokenCreator {
     @Override
     public boolean isMatching(String expression) {
         return expression.length() > 0 && expression.charAt(0) == '*';
     }
 
     @Override
-    public IToken getToken() {
-        return new IMultiplication() {
+    public Token getToken() {
+        return new Multiplication() {
         };
     }
 

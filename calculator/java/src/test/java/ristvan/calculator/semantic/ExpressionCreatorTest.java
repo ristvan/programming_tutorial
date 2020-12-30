@@ -1,23 +1,25 @@
 package ristvan.calculator.semantic;
 
 import ristvan.calculator.semantic.items.*;
-import ristvan.calculator.tokenizer.ITokenizer;
+import ristvan.calculator.tokenizer.Tokenizer;
 import ristvan.calculator.tokenizer.tokens.*;
 
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.Test;
+import ristvan.calculator.tokenizer.tokens.Number;
+
 import static org.junit.Assert.*;
 
-class TokenizerStub implements ITokenizer {
-    private List<IToken> tokens;
+class TokenizerStub implements Tokenizer {
+    private List<Token> tokens;
     private int index = 0;
-    public TokenizerStub(List<IToken> userTokens) {
+    public TokenizerStub(List<Token> userTokens) {
         tokens = userTokens;
     }
     @Override
-    public IToken getNextToken() {
-        IToken token = null;
+    public Token getNextToken() {
+        Token token = null;
         if (index < tokens.size()) {
             token = tokens.get(index);
             index++;
@@ -29,12 +31,12 @@ class TokenizerStub implements ITokenizer {
 public class ExpressionCreatorTest {
     @Test
     public void verifyThatTokenizerStubIsWorkingCorrectlyTest() {
-        List<IToken> testTokens = new LinkedList<>();
-        testTokens.add(new IAddition() {});
+        List<Token> testTokens = new LinkedList<>();
+        testTokens.add(new Addition() {});
         testTokens.add(null);
-        ITokenizer tokenizer = new TokenizerStub(testTokens);
-        IToken token = tokenizer.getNextToken();
-        assertTrue(token instanceof IAddition);
+        Tokenizer tokenizer = new TokenizerStub(testTokens);
+        Token token = tokenizer.getNextToken();
+        assertTrue(token instanceof Addition);
         token = tokenizer.getNextToken();
         assertNull(token);
         token = tokenizer.getNextToken();
@@ -43,22 +45,22 @@ public class ExpressionCreatorTest {
 
     @Test
     public void whenOnlyOneNumberIsGivenAsTokenItShouldResultThatNumber() {
-        List<IToken> testTokens = new LinkedList<>();
-        testTokens.add((INumber) () -> 42);
+        List<Token> testTokens = new LinkedList<>();
+        testTokens.add((Number) () -> 42);
 
         checkNumber(testTokens, 42);
 
         testTokens.remove(0);
-        testTokens.add((INumber) () -> 28);
+        testTokens.add((Number) () -> 28);
         checkNumber(testTokens, 28);
 
         testTokens.remove(0);
-        testTokens.add((INumber) () -> 1983);
+        testTokens.add((Number) () -> 1983);
         checkNumber(testTokens, 1983);
     }
 
-    private void checkNumber(List<IToken> testTokens, int expectedValue) {
-        ITokenizer tokenizer;
+    private void checkNumber(List<Token> testTokens, int expectedValue) {
+        Tokenizer tokenizer;
         ExpressionCreator ec;
         IExpression expression;
         tokenizer = new TokenizerStub(testTokens);
@@ -70,11 +72,11 @@ public class ExpressionCreatorTest {
 
     @Test
     public void whenTwoNumberIsGivenWithAnAdditionThatShouldBeResultedAsAHierarchy() {
-        List<IToken> testTokens = new LinkedList<>();
-        testTokens.add((INumber) () -> 42);
-        testTokens.add(new IAddition() {});
-        testTokens.add((INumber) () -> 28);
-        ITokenizer tokenizer = new TokenizerStub(testTokens);
+        List<Token> testTokens = new LinkedList<>();
+        testTokens.add((Number) () -> 42);
+        testTokens.add(new Addition() {});
+        testTokens.add((Number) () -> 28);
+        Tokenizer tokenizer = new TokenizerStub(testTokens);
         ExpressionCreator ec = new ExpressionCreator(tokenizer);
         IExpression expression = ec.createExpression();
         assertTrue("Expression is NOT an Addition", expression instanceof AdditionExpression);
@@ -88,11 +90,11 @@ public class ExpressionCreatorTest {
 
     @Test
     public void whenTwoNumberIsGivenWithASubtractionThatShouldBeResultedAsAHierarchy() {
-        List<IToken> testTokens = new LinkedList<>();
-        testTokens.add((INumber) () -> 42);
-        testTokens.add(new IMinus() {});
-        testTokens.add((INumber) () -> 28);
-        ITokenizer tokenizer = new TokenizerStub(testTokens);
+        List<Token> testTokens = new LinkedList<>();
+        testTokens.add((Number) () -> 42);
+        testTokens.add(new Minus() {});
+        testTokens.add((Number) () -> 28);
+        Tokenizer tokenizer = new TokenizerStub(testTokens);
         ExpressionCreator ec = new ExpressionCreator(tokenizer);
         IExpression expression = ec.createExpression();
         assertTrue("Expression is NOT an Subtraction", expression instanceof SubtractionExpression);
@@ -106,11 +108,11 @@ public class ExpressionCreatorTest {
 
     @Test
     public void whenTwoNumberIsGivenWithAMultiplicationThatShouldBeResultedAsAHierarchy() {
-        List<IToken> testTokens = new LinkedList<>();
-        testTokens.add((INumber) () -> 6);
-        testTokens.add(new IMultiplication() {});
-        testTokens.add((INumber) () -> 7);
-        ITokenizer tokenizer = new TokenizerStub(testTokens);
+        List<Token> testTokens = new LinkedList<>();
+        testTokens.add((Number) () -> 6);
+        testTokens.add(new Multiplication() {});
+        testTokens.add((Number) () -> 7);
+        Tokenizer tokenizer = new TokenizerStub(testTokens);
         ExpressionCreator ec = new ExpressionCreator(tokenizer);
         IExpression expression = ec.createExpression();
         assertTrue("Expression is NOT a Multiplication", expression instanceof MultiplicationExpression);
@@ -124,11 +126,11 @@ public class ExpressionCreatorTest {
 
     @Test
     public void whenTwoNumberIsGivenWithADivisionThatShouldBeResultedAsAHierarchy() {
-        List<IToken> testTokens = new LinkedList<>();
-        testTokens.add((INumber) () -> 42);
-        testTokens.add(new IDivision() {});
-        testTokens.add((INumber) () -> 7);
-        ITokenizer tokenizer = new TokenizerStub(testTokens);
+        List<Token> testTokens = new LinkedList<>();
+        testTokens.add((Number) () -> 42);
+        testTokens.add(new Division() {});
+        testTokens.add((Number) () -> 7);
+        Tokenizer tokenizer = new TokenizerStub(testTokens);
         ExpressionCreator ec = new ExpressionCreator(tokenizer);
         IExpression expression = ec.createExpression();
         assertTrue("Expression is NOT a Division", expression instanceof DivisionExpression);
@@ -142,15 +144,15 @@ public class ExpressionCreatorTest {
 
     @Test
     public void whenMoreNumbersAreGivenWithAdditionOperatorsThatShouldBeResultedAsAHierarchy() {
-        List<IToken> testTokens = new LinkedList<>();
-        testTokens.add((INumber) () -> 1);
-        testTokens.add(new IAddition() {});
-        testTokens.add((INumber) () -> 2);
-        testTokens.add(new IAddition() {});
-        testTokens.add((INumber) () -> 3);
-        testTokens.add(new IAddition() {});
-        testTokens.add((INumber) () -> 4);
-        ITokenizer tokenizer = new TokenizerStub(testTokens);
+        List<Token> testTokens = new LinkedList<>();
+        testTokens.add((Number) () -> 1);
+        testTokens.add(new Addition() {});
+        testTokens.add((Number) () -> 2);
+        testTokens.add(new Addition() {});
+        testTokens.add((Number) () -> 3);
+        testTokens.add(new Addition() {});
+        testTokens.add((Number) () -> 4);
+        Tokenizer tokenizer = new TokenizerStub(testTokens);
         ExpressionCreator ec = new ExpressionCreator(tokenizer);
 
         IExpression expression = ec.createExpression();
@@ -185,15 +187,15 @@ public class ExpressionCreatorTest {
 
     @Test
     public void whenMoreNumbersAreGivenWithSubtractionOperatorsThatShouldBeResultedAsAHierarchy() {
-        List<IToken> testTokens = new LinkedList<>();
-        testTokens.add((INumber) () -> 100);
-        testTokens.add(new IMinus() {});
-        testTokens.add((INumber) () -> 50);
-        testTokens.add(new IMinus() {});
-        testTokens.add((INumber) () -> 30);
-        testTokens.add(new IMinus() {});
-        testTokens.add((INumber) () -> 10);
-        ITokenizer tokenizer = new TokenizerStub(testTokens);
+        List<Token> testTokens = new LinkedList<>();
+        testTokens.add((Number) () -> 100);
+        testTokens.add(new Minus() {});
+        testTokens.add((Number) () -> 50);
+        testTokens.add(new Minus() {});
+        testTokens.add((Number) () -> 30);
+        testTokens.add(new Minus() {});
+        testTokens.add((Number) () -> 10);
+        Tokenizer tokenizer = new TokenizerStub(testTokens);
         ExpressionCreator ec = new ExpressionCreator(tokenizer);
 
         IExpression expression = ec.createExpression();
@@ -228,15 +230,15 @@ public class ExpressionCreatorTest {
 
     @Test
     public void whenMoreNumbersAreGivenWithMultiplicationOperatorsThatShouldBeResultedAsAHierarchy() {
-        List<IToken> testTokens = new LinkedList<>();
-        testTokens.add((INumber) () -> 1);
-        testTokens.add(new IMultiplication() {});
-        testTokens.add((INumber) () -> 2);
-        testTokens.add(new IMultiplication() {});
-        testTokens.add((INumber) () -> 3);
-        testTokens.add(new IMultiplication() {});
-        testTokens.add((INumber) () -> 4);
-        ITokenizer tokenizer = new TokenizerStub(testTokens);
+        List<Token> testTokens = new LinkedList<>();
+        testTokens.add((Number) () -> 1);
+        testTokens.add(new Multiplication() {});
+        testTokens.add((Number) () -> 2);
+        testTokens.add(new Multiplication() {});
+        testTokens.add((Number) () -> 3);
+        testTokens.add(new Multiplication() {});
+        testTokens.add((Number) () -> 4);
+        Tokenizer tokenizer = new TokenizerStub(testTokens);
         ExpressionCreator ec = new ExpressionCreator(tokenizer);
 
         IExpression expression = ec.createExpression();
@@ -271,15 +273,15 @@ public class ExpressionCreatorTest {
 
     @Test
     public void whenMoreNumbersAreGivenWithDivisionOperatorsThatShouldBeResultedAsAHierarchy() {
-        List<IToken> testTokens = new LinkedList<>();
-        testTokens.add((INumber) () -> 72);
-        testTokens.add(new IDivision() {});
-        testTokens.add((INumber) () -> 4);
-        testTokens.add(new IDivision() {});
-        testTokens.add((INumber) () -> 3);
-        testTokens.add(new IDivision() {});
-        testTokens.add((INumber) () -> 2);
-        ITokenizer tokenizer = new TokenizerStub(testTokens);
+        List<Token> testTokens = new LinkedList<>();
+        testTokens.add((Number) () -> 72);
+        testTokens.add(new Division() {});
+        testTokens.add((Number) () -> 4);
+        testTokens.add(new Division() {});
+        testTokens.add((Number) () -> 3);
+        testTokens.add(new Division() {});
+        testTokens.add((Number) () -> 2);
+        Tokenizer tokenizer = new TokenizerStub(testTokens);
         ExpressionCreator ec = new ExpressionCreator(tokenizer);
 
         IExpression expression = ec.createExpression();

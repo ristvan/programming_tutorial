@@ -1,9 +1,9 @@
 package ristvan.calculator.tokenizer.tokens.generators;
 
-import ristvan.calculator.tokenizer.tokens.IToken;
+import ristvan.calculator.tokenizer.tokens.Token;
 
-public interface ITokenCreator {
+public interface TokenCreator {
     boolean isMatching(String expression);
-    IToken getToken();
+    Token getToken();
     int getTokenLength();
 }

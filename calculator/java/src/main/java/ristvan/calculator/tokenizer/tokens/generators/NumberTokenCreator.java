@@ -1,9 +1,9 @@
 package ristvan.calculator.tokenizer.tokens.generators;
 
-import ristvan.calculator.tokenizer.tokens.INumber;
-import ristvan.calculator.tokenizer.tokens.IToken;
+import ristvan.calculator.tokenizer.tokens.Number;
+import ristvan.calculator.tokenizer.tokens.Token;
 
-public class NumberTokenCreator implements ITokenCreator {
+public class NumberTokenCreator implements TokenCreator {
     private String expression = null;
     private int index = 0;
 
@@ -15,12 +15,12 @@ public class NumberTokenCreator implements ITokenCreator {
     }
 
     @Override
-    public IToken getToken(){
+    public Token getToken(){
         while (index<expression.length() && Character.isDigit(expression.charAt(index))){
             index++;
         }
         String numberAsString = expression.substring(0, index);
-        return (INumber) () -> Integer.parseInt(numberAsString);
+        return (Number) () -> Integer.parseInt(numberAsString);
     }
 
     @Override

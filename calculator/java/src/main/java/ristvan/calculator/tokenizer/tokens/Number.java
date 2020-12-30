@@ -1,5 +1,5 @@
 package ristvan.calculator.tokenizer.tokens;
 
-public interface INumber extends IToken {
+public interface Number extends Token {
     int getValue();
 }

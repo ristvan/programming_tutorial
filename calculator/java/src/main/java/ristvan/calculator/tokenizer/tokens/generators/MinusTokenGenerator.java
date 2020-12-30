@@ -1,17 +1,17 @@
 package ristvan.calculator.tokenizer.tokens.generators;
 
-import ristvan.calculator.tokenizer.tokens.IMinus;
-import ristvan.calculator.tokenizer.tokens.IToken;
+import ristvan.calculator.tokenizer.tokens.Minus;
+import ristvan.calculator.tokenizer.tokens.Token;
 
-public class MinusTokenGenerator implements ITokenCreator {
+public class MinusTokenGenerator implements TokenCreator {
     @Override
     public boolean isMatching(String expression) {
         return expression.length() > 0 && expression.charAt(0) == '-';
     }
 
     @Override
-    public IToken getToken() {
-        return new IMinus() {
+    public Token getToken() {
+        return new Minus() {
         };
     }
 
